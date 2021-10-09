@@ -1,16 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\AddressProject.Common\AddressProject.Common.csproj" />
+      <ProjectReference Include="..\AddressProject.Providers\AddressProject.Providers.csproj" />
     </ItemGroup>
 
 </Project>
