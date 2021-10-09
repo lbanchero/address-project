@@ -16,18 +16,11 @@ namespace AddressProject.WebApi.Controllers
             _addressService = addressService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("address")]
         public async Task<ActionResult<AddressDTO>> GetAddress(AddressDTO dto)
         {
-            try
-            {
-                return await _addressService.GetAddressInformationAsync(dto.Street);
-            }
-            catch
-            {
-                return StatusCode(500);
-            }
+            return await _addressService.GetAddressInformationAsync(dto.Street);
         }
     }
 }

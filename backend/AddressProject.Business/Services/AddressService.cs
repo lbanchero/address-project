@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AddressProject.Common.DTO;
+using AddressProject.Common.Exception;
 using AddressProject.Providers.GoogleMaps;
 
 namespace AddressProject.Business.Services
@@ -22,13 +23,15 @@ namespace AddressProject.Business.Services
 
         public async Task<AddressDTO> GetAddressInformationAsync(string streetAddress)
         {
-            var result = await _googleMapsProvider.GetAddressInformationAsync(streetAddress);
+            var addressInformationResponse = await _googleMapsProvider.GetAddressInformationAsync(streetAddress);
 
-            if (result.status != "OK") throw new Exception();
+            if (addressInformationResponse.status != "OK")
+                throw new AddressProviderUnsuccessfulResponseException();
 
-            var retrievedAddress = result.results.FirstOrDefault();
+            var retrievedAddress = addressInformationResponse.results.FirstOrDefault();
 
-            if (retrievedAddress == null) throw new Exception();
+            if (retrievedAddress == null)
+                throw new EmptyResultOnAddressProviderResponseException();
 
             return new AddressDTO
             {

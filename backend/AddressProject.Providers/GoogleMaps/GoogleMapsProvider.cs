@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using AddressProject.Common.Exception;
 using AddressProject.Providers.GoogleMaps.Model;
 using RestSharp;
 
@@ -9,21 +11,28 @@ namespace AddressProject.Providers.GoogleMaps
         public Task<AddressInformationResponse> GetAddressInformationAsync(string street);
     }
 
-    public class GoogleMapsProvider
+    public class GoogleMapsProvider : IGoogleMapsProvider
     {
         private const string API_URL = "https://maps.googleapis.com/maps/api";
         
         private const string API_KEY = "API_KEY";
         
-        public async Task<AddressInformationResponse> GetAddressInformation(string street)
+        public async Task<AddressInformationResponse> GetAddressInformationAsync(string street)
         {
-            var url = $"{API_URL}";
-            
-            var client = new RestClient(url);
+            try
+            {
+                var client = new RestClient(API_URL);
 
-            var request = new RestRequest($"/geocode/json?address={street}&key={API_KEY}");
+                var request = new RestRequest($"/geocode/json")
+                    .AddParameter("address", street)
+                    .AddParameter("key", API_KEY);
             
-            return await client.GetAsync<AddressInformationResponse>(request);
+                return await client.GetAsync<AddressInformationResponse>(request);
+            }
+            catch (Exception ex)
+            {
+                throw new AddressProviderCommunicationException(ex);
+            }
         }
     }
 }
