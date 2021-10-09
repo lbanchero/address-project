@@ -15,7 +15,7 @@ namespace AddressProject.Providers.GoogleMaps
     {
         private const string API_URL = "https://maps.googleapis.com/maps/api";
         
-        private const string API_KEY = "API_KEY";
+        private const string API_KEY = "AIzaSyDyo3C2rZVouan7-1MzC-xR378mmhIQJw8";
         
         public async Task<AddressInformationResponse> GetAddressInformationAsync(string street)
         {
