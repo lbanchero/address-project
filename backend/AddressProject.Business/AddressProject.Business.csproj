@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AddressProject.Common\AddressProject.Common.csproj" />
+      <ProjectReference Include="..\AddressProject.DAL\AddressProject.DAL.csproj" />
       <ProjectReference Include="..\AddressProject.Providers\AddressProject.Providers.csproj" />
     </ItemGroup>
 
