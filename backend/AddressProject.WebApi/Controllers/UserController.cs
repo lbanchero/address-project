@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AddressProject.Business.Services;
 using AddressProject.Common.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +10,25 @@ namespace AddressProject.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IAddressService _addressService;
+        private readonly IUserService _userService;
         
-        public UserController(IAddressService addressService)
+        public UserController(IUserService userService)
         {
-            _addressService = addressService;
+            _userService = userService;
+        }
+        
+        [HttpGet]
+        [Route("users")]
+        public async Task<ActionResult<List<UserDTO>>> GetAll()
+        {
+            return await _userService.GetAsync();
         }
 
         [HttpPost]
-        [Route("user")]
+        [Route("users")]
         public async Task<ActionResult<UserDTO>> Create(UserDTO dto)
         {
-            return await _addressService.GetAddressInformationAsync(dto.Street);
+            return await _userService.CreateAsync(dto);
         }
     }
 }

@@ -1,4 +1,5 @@
 using AddressProject.Business.Services;
+using AddressProject.DAL.Repository;
 using AddressProject.Providers.GoogleMaps;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,8 +21,11 @@ namespace AddressProject.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IGoogleMapsProvider, GoogleMapsProvider>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGoogleMapsProvider, GoogleMapsProvider>();
 
             services.AddControllers();
         }
