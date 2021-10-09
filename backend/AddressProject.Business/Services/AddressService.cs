@@ -6,7 +6,12 @@ using AddressProject.Providers.GoogleMaps;
 
 namespace AddressProject.Business.Services
 {
-    public class AddressService
+    public interface IAddressService
+    {
+        public Task<AddressDTO> GetAddressInformationAsync(string streetAddress);
+    }
+
+    public class AddressService : IAddressService
     {
         private readonly IGoogleMapsProvider _googleMapsProvider;
         
@@ -15,14 +20,16 @@ namespace AddressProject.Business.Services
             _googleMapsProvider = googleMapsProvider;
         }
 
-        public async Task<AddressDTO> GetAddressInformation(string streetAddress)
+        public async Task<AddressDTO> GetAddressInformationAsync(string streetAddress)
         {
-            var result = await _googleMapsProvider.GetAddressInformation(streetAddress);
+            var result = await _googleMapsProvider.GetAddressInformationAsync(streetAddress);
 
             if (result.status != "OK") throw new Exception();
 
             var retrievedAddress = result.results.FirstOrDefault();
-            
+
+            if (retrievedAddress == null) throw new Exception();
+
             return new AddressDTO
             {
                 Street = retrievedAddress.formatted_address,

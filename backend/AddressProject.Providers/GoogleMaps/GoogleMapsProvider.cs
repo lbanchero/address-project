@@ -6,7 +6,7 @@ namespace AddressProject.Providers.GoogleMaps
 {
     public interface IGoogleMapsProvider
     {
-        public Task<AddressInformationResponse> GetAddressInformation(string street);
+        public Task<AddressInformationResponse> GetAddressInformationAsync(string street);
     }
 
     public class GoogleMapsProvider

@@ -1,4 +1,6 @@
-﻿using AddressProject.Common.DTO;
+﻿using System.Threading.Tasks;
+using AddressProject.Business.Services;
+using AddressProject.Common.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AddressProject.WebApi.Controllers
@@ -7,13 +9,20 @@ namespace AddressProject.WebApi.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
+        private readonly IAddressService _addressService;
+        
+        public AddressController(IAddressService addressService)
+        {
+            _addressService = addressService;
+        }
+
         [HttpPost]
-        [Route("Address")]
-        public ActionResult<string> GetAddress(AddressDTO dto)
+        [Route("address")]
+        public async Task<ActionResult<AddressDTO>> GetAddress(AddressDTO dto)
         {
             try
             {
-                return "Hello World";
+                return await _addressService.GetAddressInformationAsync(dto.Street);
             }
             catch
             {
