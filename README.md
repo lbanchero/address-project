@@ -4,7 +4,7 @@
 
 1. Install [Docker](https://docs.docker.com/get-docker/) since it's required for doing the docker compose.
 
-2. Replace the `GoogleMapsApiKey` on the appsettings.json file. File should be located inside the backend folder
+2. Replace the `GoogleMapsApiKey` on the appsettings.json file. File should be located inside the backend/AddressProject.WebApi folder
 
 3. Place the terminal on the infrastructure folder and run this command.
 
