@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AddressProject.Common.Exception;
 using AddressProject.Providers.GoogleMaps.Model;
+using Microsoft.Extensions.Configuration;
 using RestSharp;
 
 namespace AddressProject.Providers.GoogleMaps
@@ -13,10 +14,16 @@ namespace AddressProject.Providers.GoogleMaps
 
     public class AddressProvider : IAddressProvider
     {
-        private const string API_URL = "https://maps.googleapis.com/maps/api";
+        private readonly string API_URL;
         
-        private const string API_KEY = "AIzaSyDyo3C2rZVouan7-1MzC-xR378mmhIQJw8";
-        
+        private readonly string API_KEY;
+
+        public AddressProvider(IConfiguration config)
+        {
+            API_URL = config["GoogleMapsAPIUrl"];
+            API_KEY = config["GoogleMapsApiKey"];
+        }
+
         public async Task<AddressInformationResponse> GetAddressInformationAsync(string street)
         {
             try

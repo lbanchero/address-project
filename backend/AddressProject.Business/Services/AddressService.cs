@@ -23,14 +23,14 @@ namespace AddressProject.Business.Services
         public async Task<AddressDTO> GetAddressInformationAsync(string streetAddress)
         {
             var addressInformationResponse = await _addressProvider.GetAddressInformationAsync(streetAddress);
+            
+            if (addressInformationResponse.status == "ZERO_RESULTS")
+                throw new EmptyResultOnAddressProviderResponseException();
 
             if (addressInformationResponse.status != "OK")
                 throw new AddressProviderUnsuccessfulResponseException();
 
-            var retrievedAddress = addressInformationResponse.results.FirstOrDefault();
-
-            if (retrievedAddress == null)
-                throw new EmptyResultOnAddressProviderResponseException();
+            var retrievedAddress = addressInformationResponse.results.First();
 
             return new AddressDTO
             {

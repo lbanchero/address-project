@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AddressProject.Business.Services;
 using AddressProject.Common.DTO;
+using AddressProject.Common.Exception;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,14 @@ namespace AddressProject.WebApi.Controllers
         [Route("addresses")]
         public async Task<ActionResult<AddressDTO>> CheckAddress(AddressDTO dto)
         {
-            return await _addressService.GetAddressInformationAsync(dto.Street);
+            try
+            {
+                return await _addressService.GetAddressInformationAsync(dto.Street);
+            }
+            catch (EmptyResultOnAddressProviderResponseException)
+            {
+                return NotFound();
+            }
         }
     }
 }
