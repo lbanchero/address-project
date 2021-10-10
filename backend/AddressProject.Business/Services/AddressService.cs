@@ -13,16 +13,16 @@ namespace AddressProject.Business.Services
 
     public class AddressService : IAddressService
     {
-        private readonly IGoogleMapsProvider _googleMapsProvider;
+        private readonly IAddressProvider _addressProvider;
         
-        public AddressService(IGoogleMapsProvider googleMapsProvider)
+        public AddressService(IAddressProvider addressProvider)
         {
-            _googleMapsProvider = googleMapsProvider;
+            _addressProvider = addressProvider;
         }
 
         public async Task<AddressDTO> GetAddressInformationAsync(string streetAddress)
         {
-            var addressInformationResponse = await _googleMapsProvider.GetAddressInformationAsync(streetAddress);
+            var addressInformationResponse = await _addressProvider.GetAddressInformationAsync(streetAddress);
 
             if (addressInformationResponse.status != "OK")
                 throw new AddressProviderUnsuccessfulResponseException();

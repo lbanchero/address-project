@@ -6,12 +6,12 @@ using RestSharp;
 
 namespace AddressProject.Providers.GoogleMaps
 {
-    public interface IGoogleMapsProvider
+    public interface IAddressProvider
     {
         public Task<AddressInformationResponse> GetAddressInformationAsync(string street);
     }
 
-    public class GoogleMapsProvider : IGoogleMapsProvider
+    public class AddressProvider : IAddressProvider
     {
         private const string API_URL = "https://maps.googleapis.com/maps/api";
         

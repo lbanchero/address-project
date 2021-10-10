@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using AddressProject.Business.Services;
 using AddressProject.Common.DTO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AddressProject.WebApi.Controllers
 {
     [Route("api")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class UserController : ControllerBase
     {

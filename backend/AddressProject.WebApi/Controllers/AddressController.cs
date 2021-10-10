@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using AddressProject.Business.Services;
 using AddressProject.Common.DTO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AddressProject.WebApi.Controllers
 {
     [Route("api")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class AddressController : ControllerBase
     {
@@ -16,9 +18,9 @@ namespace AddressProject.WebApi.Controllers
             _addressService = addressService;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("addresses")]
-        public async Task<ActionResult<AddressDTO>> GetAddress(AddressDTO dto)
+        public async Task<ActionResult<AddressDTO>> CheckAddress(AddressDTO dto)
         {
             return await _addressService.GetAddressInformationAsync(dto.Street);
         }

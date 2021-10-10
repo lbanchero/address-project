@@ -23,7 +23,7 @@ namespace AddressProject.DAL.Repository
             
             var client = new MongoClient(connectionString);
             
-            var database = client.GetDatabase("addressProjectDb");
+            var database = client.GetDatabase("addressProject");
             
             _users = database.GetCollection<User>("Users");
         }

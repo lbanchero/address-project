@@ -21,13 +21,15 @@ namespace AddressProject.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IGoogleMapsProvider, GoogleMapsProvider>();
-
-            services.AddControllers();
+            services.AddScoped<IAddressProvider, AddressProvider>();
+            
+            ConfigureCors(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +45,22 @@ namespace AddressProject.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseCors();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+        
+        private void ConfigureCors(IServiceCollection services)
+        {
+            var frontendServerUrl = Configuration.GetValue<string>("FrontendServerUrl");
+            services.AddCors(options =>
+                options.AddPolicy("AllowOrigin", builder =>
+                    builder.WithOrigins(frontendServerUrl)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                )
+            );
         }
     }
 }
